@@ -5,7 +5,7 @@ A turn-based RPG battle simulation built with **C#** and **.NET**. This project 
 ## 🎮 Game Mechanics
 - **Turn-Based Combat:** Gladiators attack each other in turns.
 - **Randomized Damage:** Damage calculation involves RNG (Random Number Generation) for dynamic gameplay.
-- **Critical Hit System:** There is a **20% chance** to deal double damage ("Critical Hit").
+- **Critical Hit System:** There is a **15% chance** to deal double damage ("Critical Hit").
 - **Health Management:** Prevents health from dropping below zero using logic checks.
 
 ## 🚀 Key Concepts & Technologies
