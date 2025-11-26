@@ -3,10 +3,12 @@
 A turn-based RPG battle simulation built with **C#** and **.NET**. This project demonstrates core Object-Oriented Programming (OOP) principles, game logic implementation, and clean code practices.
 
 ## 🎮 Game Mechanics
-- **Turn-Based Combat:** Gladiators attack each other in turns.
-- **Randomized Damage:** Damage calculation involves RNG (Random Number Generation) for dynamic gameplay.
-- **Critical Hit System:** There is a **15% chance** to deal double damage ("Critical Hit").
-- **Health Management:** Prevents health from dropping below zero using logic checks.
+- **Class System (Inheritance):**
+  - **Warrior:** Has `ArmorBonus` property. Blocks incoming damage by a fixed amount.
+  - **Assassin:** Has `CritChance` property. Deals double damage based on probability logic.
+- **Dynamic Enemy Spawning:** Enemies are randomly generated from a name pool with varying stats.
+- **Loot System:** Winners are rewarded with randomized items stored in a `List<string>` inventory.
+- **Turn-Based Combat:** Gladiators attack each other in turns with Polymorphic behavior.
 
 ## 🚀 Key Concepts & Technologies
 This project was created to practice and demonstrate the following concepts:
@@ -25,22 +27,31 @@ This project was created to practice and demonstrate the following concepts:
 
 ## 📸 Example Output
 ```text
---- WELCOME TO THE ARENA! ---
-Fighters: Spartacus vs Crixus
+--- WELCOME TO THE ARENA ---
+Fighters: Spartacus vs Gannicus
 The Battle Begins...
 
 -----------------------------------
 
-Spartacus hits Crixus for 14 damage.
-Crixus hits Spartacus for 12 damage.
-Stats -> Spartacus: 88 HP | Crixus: 86 HP
+Spartacus hits Gannicus for 12 damage.
+ASSASSIN STRIKE! Gannicus found a weak spot on Spartacus! (34 Damage)
+Spartacus (Warrior) uses armor! Blocks 4 damage. Taken: 30
+Stats -> Spartacus: 70 HP | Gannicus: 68 HP
 
 -----------------------------------
 
-CRITICAL HIT! Spartacus demolished Crixus! (32 Damage)
-Stats -> Spartacus: 88 HP | Crixus: 54 HP
+Spartacus hits Gannicus for 15 damage.
+Gannicus attacks Spartacus swiftly using daggers. (14 Damage)
+Spartacus (Warrior) uses armor! Blocks 4 damage. Taken: 10
+Stats -> Spartacus: 60 HP | Gannicus: 53 HP
 
-...
+... (Battle continues) ...
+
+-----------------------------------
 
 --- BATTLE ENDED ---
 WINNER: Spartacus!
+Spartacus loots a Mysterious Key from the arena!
+
+--- WINNER'S INVENTORY ---
+- Mysterious Key
