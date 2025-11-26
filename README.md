@@ -1,31 +1,30 @@
-# ⚔️ Gladiator Arena Console Game
+# ⚔️ Gladiator Arena - Interactive RPG
 
-A turn-based RPG battle simulation built with **C#** and **.NET**. This project demonstrates core Object-Oriented Programming (OOP) principles, game logic implementation, and clean code practices.
+An interactive, turn-based console RPG game built with **C#** and **.NET**. Unlike simple simulations, this project puts **YOU** in the arena. You must choose your actions wisely against a smart AI opponent to survive and claim the loot.
 
-## 🎮 Game Mechanics
-- **Class System (Inheritance):**
-  - **Warrior:** Has `ArmorBonus` property. Blocks incoming damage by a fixed amount.
-  - **Assassin:** Has `CritChance` property. Deals double damage based on probability logic.
-- **Dynamic Enemy Spawning:** Enemies are randomly generated from a name pool with varying stats.
-- **Loot System:** Winners are rewarded with randomized items stored in a `List<string>` inventory.
-- **Turn-Based Combat:** Gladiators attack each other in turns with Polymorphic behavior.
+## 🎮 Game Features & Mechanics
 
-## 🚀 Key Concepts & Technologies
-This project was created to practice and demonstrate the following concepts:
-- **C# / .NET Core**
-- **OOP Principles:**
-  - **Encapsulation:** Using `private set` to protect data integrity (e.g., Health).
-  - **Classes & Objects:** Modular design separating the `Gladiator` class from the `Program` logic.
-- **Algorithmic Logic:**
-  - Game Loop (`while` state management).
-  - Conditional Logic (`if-else` for critical hits and death checks).
-  - "Zombie Check" (Breaking the loop immediately when a fighter dies).
+### 🕹️ Interactive Combat Loop
+- **Player Control:** You are in command of **Spartacus** (Warrior).
+  - **1) ATTACK:** Strike the enemy using your weapon.
+  - **2) HEAL:** Take a risk to restore **10-30 HP**.
+- **Dynamic Turn System:** The game pauses for your input and simulates enemy thinking time for a realistic flow.
 
-## 📂 Project Structure
-- **`Program.cs`**: Handles the game loop, UI rendering, and flow control.
-- **`Gladiator.cs`**: Defines the Gladiator object properties, constructor, and combat methods (Attack, TakeDamage).
+### 🤖 Smart Enemy AI
+- The enemy isn't just random.
+- **Decision Making:** If the enemy's health is low, there is a chance it will choose to **Heal** instead of attacking.
+- **Randomized Spawning:** Every time you play, you face a different Assassin (e.g., *Crixus, Gannicus, Verus*) selected from a name pool.
 
-## 📸 Example Output
+### 🛡️ Class System (Inheritance & Polymorphism)
+- **Warrior (Player):** Inherits from Gladiator. Has a unique `ArmorBonus` that reduces incoming damage by a fixed amount every turn.
+- **Assassin (Enemy):** Inherits from Gladiator. Has a `CritChance` property. Rolls a die every turn for a chance to deal **Double Damage**.
+
+### 💰 Loot & Inventory
+- **Reward System:** The winner receives a random item (e.g., *Golden Cup*, *Health Potion*).
+- **Collections:** Items are stored in a dynamic `List<string>` inventory structure.
+
+## 📸 Example Gameplay Output
+
 ```text
 --- WELCOME TO THE ARENA ---
 Fighters: Spartacus vs Gannicus
@@ -33,23 +32,39 @@ The Battle Begins...
 
 -----------------------------------
 
-Spartacus hits Gannicus for 12 damage.
-ASSASSIN STRIKE! Gannicus found a weak spot on Spartacus! (34 Damage)
-Spartacus (Warrior) uses armor! Blocks 4 damage. Taken: 30
-Stats -> Spartacus: 70 HP | Gannicus: 68 HP
+[PLAYER TURN] Spartacus (HP: 100/100)
+CHOOSE ACTION
+1) ATTACK
+2) HEAL
+Choice: 1
+
+Spartacus hits Gannicus for 16 damage.
+
+[ENEMY TURN] Gannicus is thinking...
+
+Gannicus attacks Spartacus swiftly using daggers. (18 Damage)
+Spartacus (Warrior) uses armor! Blocks 4 damage. Taken: 14
 
 -----------------------------------
 
-Spartacus hits Gannicus for 15 damage.
-Gannicus attacks Spartacus swiftly using daggers. (14 Damage)
-Spartacus (Warrior) uses armor! Blocks 4 damage. Taken: 10
-Stats -> Spartacus: 60 HP | Gannicus: 53 HP
+Stats -> Spartacus: 86 HP | Gannicus: 84 HP
 
-... (Battle continues) ...
+-----------------------------------
+
+[PLAYER TURN] Spartacus (HP: 86/100)
+CHOOSE ACTION
+1) ATTACK
+2) HEAL
+Choice: 2
+
+Spartacus heals for 22 HP. (Current HP: 100)
+
+... (Battle Continues) ...
 
 -----------------------------------
 
 --- BATTLE ENDED ---
+
 WINNER: Spartacus!
 Spartacus loots a Mysterious Key from the arena!
 
