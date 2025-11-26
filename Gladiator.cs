@@ -5,11 +5,12 @@ using System.Text;
 namespace GladiatorArena
 {
     /// <summary>
-    /// Represents a Gladiator character with properties for health, damage, and combat actions.
+    /// Base class representing a fighter in the game.
+    /// Other character types (like Warrior, Assassin) inherit from this class.
     /// </summary>
     public class Gladiator
     {
-        // PROPERTIES
+        // --- PROPERTIES ---
 
         /// <summary>
         /// The name of the Gladiator
@@ -17,54 +18,61 @@ namespace GladiatorArena
         public string Name { get; private set; }
 
         /// <summary>
-        /// Current health points of the Gladiator.
+        /// Current health points (HP).
         /// </summary>
         public int Health { get; private set; }
 
         /// <summary>
-        /// Minimum possible damage per hit.
+        /// Minimum damage this fighter can deal.
         /// </summary>
         public int MinDamage { get; private set; }
 
         /// <summary>
-        /// Maximum possible damage per hit.
+        /// Maximum damage this fighter can deal.
         /// </summary>
         public int MaxDamage { get; private set; }
 
-        // VARIABLES
+        /// <summary>
+        /// List of items the fighter has collected.
+        /// </summary>
+        public List<string> Inventory { get; private set; }
 
-        // Random number generator for combat mechanics
-        Random random = new Random();
+        // --- VARIABLES ---
 
-        // CONSTRUCTOR
+        // Random number generator used for attacks and chances
+        protected Random random = new Random();
+
+        // --- CONSTRUCTOR ---
 
         /// <summary>
-        /// Initializes a new instance of the Gladiator class.
+        /// Creates a new Gladiator with starting stats.
         /// </summary>
-        /// <param name="name">The name of the fighter.</param>
-        /// <param name="health">Starting health points.</param>
-        /// <param name="minDamage">Minimum damage range.</param>
-        /// <param name="maxDamage">Maximum damage range</param>
+        /// <param name="name">Fighter's name.</param>
+        /// <param name="health">Starting HP.</param>
+        /// <param name="minDamage">Lowest possible damage.</param>
+        /// <param name="maxDamage">Highest possible damage.</param>
         public Gladiator(string name, int health, int minDamage, int maxDamage)
         {
             Name = name;
             Health = health;
             MinDamage = minDamage;
             MaxDamage = maxDamage;
+
+            this.Inventory = new List<string>();
         }
 
-        // METHODS
+        // --- METHODS ---
 
         /// <summary>
-        /// Reduces the Gladiator's health by the specified amount.
-        /// Prevents health from dropping below zero.
+        /// Decreases the fighter's health by a specific amount.
+        /// Also makes sure health doesn't drop below zero.
         /// </summary>
-        /// <param name="damageAmount">The amount of damage taken.</param>
-        public void TakeDamage(int damageAmount)
+        /// <param name="damageAmount">Damage to apply.</param>
+        public virtual void TakeDamage(int damageAmount)
         {
             this.Health -= damageAmount;
 
-            // Health validation: Health cannot be negative
+            // Check if health went below zero, fix it if so
             if (this.Health < 0)
             {
                 this.Health = 0; 
@@ -72,16 +80,16 @@ namespace GladiatorArena
         }
 
         /// <summary>
-        /// Calculates damage and attacks the target enemy.
-        /// Includes a 15% chance for a Critical Hit (2x Damage).
+        /// Performs an attack on a target enemy.
+        /// Calculates damage and checks for critical hits.
         /// </summary>
-        /// <param name="enemy">The target Gladiator to attack.</param>
-        public void Attack(Gladiator enemy)
+        /// <param name="enemy">The enemy to attack.</param>
+        public virtual void Attack(Gladiator enemy)
         {
-            // 1. Calculate base damage
+            // 1. Pick a random damage number between Min and Max
             int damage = random.Next(MinDamage, MaxDamage + 1);
 
-            // 2. Roll for critical hit chance (1-100)
+            // 2. Roll a die (1-100) to see if it's a critical hit
             int diceRoll = random.Next(1, 101);
 
             // 15% Chance for Critical Hit
@@ -101,9 +109,9 @@ namespace GladiatorArena
         }
 
         /// <summary>
-        /// Checks if the Gladiator is dead.
+        /// Checks if the fighter is currently dead.
         /// </summary>
-        /// <returns>True if health is 0 or less; otherwise, false.</returns>
+        /// <returns>True if HP is 0, otherwise False.</returns>
         public bool IsDead()
         {
             if (this.Health > 0)
