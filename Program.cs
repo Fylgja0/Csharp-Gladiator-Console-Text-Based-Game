@@ -42,26 +42,65 @@
             {
                 Console.WriteLine();
                 Console.WriteLine("-----------------------------------");
+                // Display current status and menu options to the player.
+                Console.WriteLine($"\n[PLAYER TURN] {fighter1.Name} (HP: {fighter1.Health}/{fighter1.MaxHealth})");
+                Console.WriteLine("CHOOSE ACTION");
+                Console.WriteLine("1) ATTACK");
+                Console.WriteLine("2) HEAL");
+                Console.Write("Choice: ");
+
+                // Capture user input.
+                string choice = Console.ReadLine();
                 Console.WriteLine();
 
-                // 1. Fighter 1 Attacks
-                fighter1.Attack(fighter2);
+                // --- PLAYER LOGIC ---
 
-                // 2. Zombie Check
-                // If fighter 2 dies, break the loop immediately
-                if (fighter2.IsDead())
+                if (choice == "1")
                 {
-                    break;
+                    // Option 1: Perform an attack against the enemy.
+                    fighter1.Attack(fighter2);
+                }
+                else if (choice == "2")
+                {
+                    // Option 2: Attempt to restore health.
+                    fighter1.Heal();
+                }
+                else
+                {
+                    // Handle invalid input (User loses their turn as a penalty).
+                    Console.WriteLine("Invalid choice! You lost your footing and skipped a turn!");
                 }
 
-                // 3. Fighter 2 Attacks (Counter-attack) if still alive
-                fighter2.Attack(fighter1);
+                // Zombie Check: If the enemy died from the player's attack, stop the loop immediately.
+                if (fighter2.IsDead()) break;
 
-                // Show current health for both
-                Console.WriteLine($"Stats -> {fighter1.Name}: {fighter1.Health} HP | {fighter2.Name}: {fighter2.Health} HP");
+                // --- ENEMY LOGIC (SIMPLE AI) ---
 
-                // Wait 2 seconds between turns
-                System.Threading.Thread.Sleep(2000);
+                Console.WriteLine();
+                Console.WriteLine($"[ENEMY TURN] {fighter2.Name} is thinking...");
+                Console.WriteLine();
+                // Simulate thinking time for better user experience.
+                System.Threading.Thread.Sleep(1000);
+
+                // Roll a die (0 to 9) to decide the enemy's action.
+                int enemyAction = rng.Next(0, 10);
+
+                // AI Decision: 20% chance to Heal (0-1), 80% chance to Attack (2-9).
+                // Also checks if health is less than max to avoid wasting a turn.
+                if (enemyAction < 2 && fighter2.Health < fighter2.MaxHealth)
+                {
+                    fighter2.Heal();
+                }
+                else
+                {
+                    fighter2.Attack(fighter1);
+                }
+
+                // --- END OF TURN STATS ---
+
+                // Display the updated health of both fighters after the round.
+                Console.WriteLine("\n-----------------------------------");
+                Console.WriteLine($"\nStats -> {fighter1.Name}: {fighter1.Health} HP | {fighter2.Name}: {fighter2.Health} HP");
             }
 
             // --- END GAME ---

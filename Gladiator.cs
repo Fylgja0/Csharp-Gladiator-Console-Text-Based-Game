@@ -23,6 +23,11 @@ namespace GladiatorArena
         public int Health { get; private set; }
 
         /// <summary>
+        /// Maximum health points (HP)
+        /// </summary>
+        public int MaxHealth { get; private set; }
+
+        /// <summary>
         /// Minimum damage this fighter can deal.
         /// </summary>
         public int MinDamage { get; private set; }
@@ -55,6 +60,7 @@ namespace GladiatorArena
         {
             Name = name;
             Health = health;
+            MaxHealth = health;
             MinDamage = minDamage;
             MaxDamage = maxDamage;
 
@@ -105,6 +111,31 @@ namespace GladiatorArena
                 //Normal hit
                 enemy.TakeDamage(damage);
                 Console.WriteLine($"{this.Name} hits {enemy.Name} for {damage} damage.");
+            }
+        }
+
+        /// <summary>
+        /// Restores a random amount of health (10-30 HP) to the Gladiator.
+        /// </summary>
+        /// <remarks>
+        /// This method is virtual, allowing derived classes to customize healing logic.
+        /// Health cannot exceed <see cref="MaxHealth"/>.
+        /// </remarks>
+        public virtual void Heal()
+        {
+            // Randomly hit heals (10-30 HP)
+            int healAmount = random.Next(10, 31);
+
+            Health += healAmount;
+
+            if (Health > MaxHealth)
+            {
+                Health = MaxHealth;
+                Console.WriteLine($"{Name} heals and reaches full health! (+{healAmount} HP)");
+            }
+            else
+            {
+                Console.WriteLine($"{Name} heals specifically for {healAmount} HP.");
             }
         }
 
